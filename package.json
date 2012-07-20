@@ -1,0 +1,27 @@
+{
+	"name": "google-bigquery",
+	"description": "node.js package for accessing google bigquery through a service account",
+	"version": "0.1.0",
+	"author": {
+		"name": "Gustavo Machado",
+		"email": "machadogj@gmail.com"
+	},
+	"engines": {
+    	"node": ">= 0.6.16"
+	},
+	"keywords": [
+		"google",
+		"bigquery"
+	],
+	"dependencies": {
+		"jwt-sign": "*",
+		"request": "*"
+	},
+	"scripts": {
+		"test": "./node_modules/.bin/mocha test/*.js --timeout 10000 --reporter spec"
+	},
+	"devDependencies": {
+    	"mocha": "*"
+  	},
+  	"main":"./index"
+}
