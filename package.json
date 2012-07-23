@@ -6,6 +6,10 @@
 		"name": "Gustavo Machado",
 		"email": "machadogj@gmail.com"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/machadogj/node-google-bigquery.git"
+	},
 	"engines": {
     	"node": ">= 0.6.16"
 	},
