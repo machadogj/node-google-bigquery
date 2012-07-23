@@ -38,7 +38,6 @@ Copy your .pem file to the 'test' folder, and then run the tests using mocha or 
 Notice: these tests are going to be hitting your bigquery account directly, so I recommend setting a tests project, and setting the mocha timeout to 10 seconds (mocha --timeout 10000 test/tests.js).
 
 # TODO
-* Uploading of data into tables.
 * Better API for querying tables (right now you do it through jobs create and query methods)
 * Review the token expiration/refresh logic.
 
