@@ -346,5 +346,55 @@ describe('google bigquery client', function (){
             });
         });
 
+        it('can create query job', function ( done ) {
+            /*
+                projectId: 'tellagostudios.com:kidozen',
+                datasetId: 'devaudit',
+                tableId: 'bulkdata'
+            */
+            var jobName = "testJob" + new Date().getTime();
+            var job = {
+                id: jobName,
+                jobReference: {
+                    projectId: 'YOUR-PROJECT-ID',
+                    jobId: jobName
+                },
+                configuration: {
+                    query: {
+                        "query": "SELECT tenantId, serviceName, STRFTIME_UTC_USEC(NOW(), '%H:%M') AS ts, count(*) as count FROM [devaudit.bulkdata] " +
+                                 "WHERE startedOn * 1000 > UTC_USEC_TO_MONTH(1344970355790 * 1000) " +
+                                 "GROUP BY tenantId, serviceName, ts " +
+                                 "LIMIT 1000 "
+                    }
+                }
+            };
+
+            client.jobs.create(job, function (err, entity) {
+                assert.equal(undefined, err);
+                assert.ok(entity);
+                console.log( err || entity );
+                console.log( JSON.stringify(entity));
+                done();
+            });
+        });
+
+        it('can execute query', function  ( done ) {
+            var projectId = 'YOUR-PROJECT-ID',
+                //COMPLETE YOUR QUERY HERE.
+                query = "SELECT col1 FROM [dataset1.table1] " +
+                        "LIMIT 1000 ",
+                options = {
+                    projId: projectId,
+                    query: query
+                };
+
+            client.jobs.query(options, function ( err, result ){
+                assert.equal( undefined, err );
+                assert.ok( result );
+
+                console.log( err || result );
+                done();
+            });
+        });
     });
 });
