@@ -1,7 +1,7 @@
 {
 	"name": "google-bigquery",
 	"description": "node.js package for accessing google bigquery through a service account",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"author": {
 		"name": "Gustavo Machado",
 		"email": "machadogj@gmail.com"
