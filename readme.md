@@ -31,7 +31,7 @@ var bigquery = require('google-bigquery'),
 In order to execute the tests, first set up an environment variable 'GOOGLE_ISS' with the ISS taken from your Google API Service Account (notice that you have to register your Google API account for BigQuery first), something like this: "abcdefghij@developer.gserviceaccount.com".
 You also have to get a .pem with your private key to sign the token requests. To get this .pem file, create a service account in Google API's console, and download the .p12 file. In linux you can convert the .p12 file with openssl using the following command (notice the -nodes):
 
-openssl -in yourp12file.p12 -out file.pem -nodes
+openssl pkcs12 -in yourp12file.p12 -out file.pem -nodes
 
 Copy your .pem file to the 'test' folder, and then run the tests using mocha or npm test.
 
