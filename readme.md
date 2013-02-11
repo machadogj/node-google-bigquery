@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/machadogj/node-google-bigquery.png)](http://travis-ci.org/machadogj/node-google-bigquery)
 Access Google BigQuery using a service account from node.js
 
 
