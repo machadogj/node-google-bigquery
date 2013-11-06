@@ -397,4 +397,89 @@ describe('google bigquery client', function (){
             });
         });
     });
+
+	describe('tabledata', function() {
+
+		var projId = null;
+		var datasetId = null;
+
+		before(function( done ) {
+			client.getProjects(function (err, projs) {
+				projId = projs.projects[0].id;
+				client.datasets.getAll(projId, function (err, datasets) {
+					//get the first.
+					datasetId = datasets.datasets[0].datasetReference.datasetId;
+
+					done();
+				});
+			});
+		});
+
+		it('should insert data into a table', function( done ) {
+			var tableId = "tesTable" + ~~(Math.random() * 100000);
+			var	table = {
+				friendlyName: tableId,
+				tableReference: {
+					projectId: projId,
+					datasetId: datasetId,
+					tableId: tableId
+				},
+				schema: {
+					fields: [
+						{ name: 'col1', type: 'STRING' }
+					]
+				}
+			};
+			var rows = [{
+				json: {
+					col1: 'test1'
+				}
+			}, {
+				json: {
+					col1: 'test2'
+				}
+			}];
+
+			client.tables.create(table, function () {
+				client.tabledata.insertAll(rows, projId, datasetId, tableId, function (err, result) {
+					assert.equal(undefined, err);
+					assert.ok(result);
+					assert.equal('bigquery#tableDataInsertAllResponse', result.kind);
+
+					//cleanup
+					client.tables.delete(tableId, datasetId, projId, function (){});
+					done();
+				});
+			});
+		});
+
+		it('should list data of a table', function( done ) {
+			client.tables.getAll(datasetId, projId, function (err, tables) {
+				var tableId = tables.tables[0].tableReference.tableId;
+
+				client.tabledata.list(projId, datasetId, tableId, {}, function (err, results) {
+					assert.equal(undefined, err);
+					assert.ok(results);
+					assert.equal('bigquery#tableDataList', results.kind);
+
+					done();
+				});
+			});
+		});
+
+		it('should list only one of a table', function( done ) {
+			client.tables.getAll(datasetId, projId, function (err, tables) {
+				var tableId = tables.tables[0].tableReference.tableId;
+
+				client.tabledata.list(projId, datasetId, tableId, {maxResults: 2}, function (err, results) {
+					assert.equal(undefined, err);
+					assert.ok(results);
+					assert.equal(2, results.rows.length);
+
+					done();
+				});
+			});
+		});
+
+	});
 });
