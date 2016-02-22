@@ -1,2 +1,4 @@
 node_modules
 test/file.pem
+.idea/
+*.iml
